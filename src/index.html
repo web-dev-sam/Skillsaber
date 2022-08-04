@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="assets/css/pico/pico.min.css">
+</head>
+<body>
+    <style>
+        #hero {
+            margin-top: 5rem;
+        }
+    </style>
+    <main class="container">
+        <section id="hero">
+            <hgroup>
+                <h1>Skillsaber</h1>
+                <h3>
+                    Are you really good at acc, tech or speed and want to know how you perform among other players in specific categories? 
+                    Have you ever wondered how much pp you would have if you had the skill in other categories too? Find your <em>"skill-based pp"</em> here!
+                </h3>
+            </hgroup>
+        </section>
+        <section id="start">
+            <hgroup>
+                <h2>Getting Started</h2>
+                <h3>
+                    Enter your scoresaber and category info below.
+                </h3>
+            </hgroup>
+
+            <label for="ss-profile">Scoresaber Profile</label>
+            <input type="text" id="ss-profile" name="ss-profile" placeholder="" value="https://scoresaber.com/u/76561198436848521" />
+            <small>Paste your scoresaber profile URL above.</small>
+
+            <label for="bs-category">Category</label>
+            <select id="bs-category">
+                <option value=""></option>
+                <option value="true-acc">True Acc</option>
+                <option value="stan-acc">Standard Acc</option>
+                <option value="tech-acc" selected>Tech Acc</option>
+            </select>
+            <small>Other categories will be available soon!</small>
+
+            <button type="submit" id="start-btn">Lets see!</button>
+        </section>
+    </main>
+
+    <script type="module" src="js/index.js"></script>
+</body>
+</html>

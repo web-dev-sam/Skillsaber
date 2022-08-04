@@ -1,0 +1,21 @@
+{
+  "name": "skillsaber",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vercel dev",
+    "deploy": "vercel",
+    "prod": "vercel --prod",
+    "parcel": "parcel ./src/*.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
