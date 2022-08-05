@@ -124,7 +124,7 @@ export default class ProfilePage {
         this._progressElement.classList.remove("hidden");
         this._progressLabel.classList.remove("hidden");
         this._progressElement.setAttribute("value", progress);
-        this._progressLabel.innerHTML = `${Math.floor(progress * 10) / 10}% <br> Loading your scoresaber profile... <br>(takes a few minutes on the first time)`;
+        this._progressLabel.innerHTML = `${Math.floor(progress * 10) / 10}% <br> Loading your scoresaber profile... <br>(takes a few minutes based on your play count)`;
     }
 
     areYouSure() {
