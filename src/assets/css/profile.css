@@ -82,3 +82,23 @@ tbody > tr {
     box-shadow: none !important;
     outline: none !important;
 }
+
+
+@media only screen and (max-width: 990px){
+	.fa-star {
+        display: none !important;
+    }
+}
+
+
+@media only screen and (min-width: 768px){
+	figure {
+        overflow: hidden;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    tr img {
+        display: none;
+    }
+}
