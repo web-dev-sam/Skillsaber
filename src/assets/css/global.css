@@ -1,0 +1,54 @@
+body {
+    box-sizing: border-box;
+}
+
+.thin-header {
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+.mt {
+    margin-top: 4rem;
+}
+
+.tab-view {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.tab-view > a {
+    display: block;
+    padding: 0.2rem 1rem;
+    margin: 0 0.5rem;
+}
+
+.tab-view > a,
+.tab-view > a:hover,
+.tab-view > a:focus,
+.tab-view > a:active,
+.tab-view > a:visited {
+    background-color: var(--muted-border-color);
+    color: var(--h6-color);
+}
+
+.tab-view > a.active {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.hidden {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+nav > a {
+    cursor: pointer;
+}
+
+tbody > tr {
+    height: 62px;
+}

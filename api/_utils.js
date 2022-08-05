@@ -46,7 +46,7 @@ export class APICall {
 }
 
 export function notFound(response, message) {
-    response.status(400).json({
+    response.status(404).json({
         errorMessage: message
     });
 }

@@ -1,1 +1,4 @@
-console.log("Here we go again...");
+
+import ProfilePage from "./view/profile";
+
+window._profilePage = new ProfilePage();
