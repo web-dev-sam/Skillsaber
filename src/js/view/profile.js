@@ -146,6 +146,7 @@ export default class ProfilePage {
         this._profileImage.src = profile.profilePicture;
         this._profilePP.innerText = profile.pp + "pp";
         this._headerContainer.classList.remove("hidden");
+        document.title = `Skillsaber | ${profile.name}`;
 
         // Load scores
         if (this._topPlaysBtn.classList.contains("active")) {
