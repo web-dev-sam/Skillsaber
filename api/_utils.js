@@ -23,8 +23,6 @@ export class APICall {
     success(data) {
         if (this.responded) return;
 
-        console.log(data);
-
         this.responded = true;
         this.response.status(200).json(data);
     }
