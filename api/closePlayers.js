@@ -15,9 +15,6 @@ export default async (request, response) => {
     const maxRank = minRank === 1 ? rank * 2 - 1 : rank + playerRange;
     const minPage = Math.floor(minRank / 12) + 1;
     const maxPage = Math.floor(maxRank / 12) + 1;
-    console.log(rank);
-    console.log(minRank, maxRank);
-    console.log(minPage, maxPage);
 
     // Call the API
     const jsonmin = await new APICall(`https://scoresaber.com/api/leaderboard/by-id/${leaderboard}/scores?page=${minPage}`, response, json => json.scores).dryExecute();
