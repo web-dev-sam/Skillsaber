@@ -70,7 +70,7 @@ export default class ProfilePage {
                     <td>${map.stars}</td>
                     <td>${play.accuracy}%</td>
                     <td>${play.pp}</td>
-                    <td>Loading...</td>
+                    <td>${play.playWorth}pp</td>
                 `;
                 this._topPlaysTable.appendChild(rowElement);
             }
