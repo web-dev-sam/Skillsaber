@@ -4,9 +4,9 @@
 self.addEventListener('install', async (event) => {
   //const cache = await caches.open('min-static');
   //cache.addAll(staticAssets);
-  console.log("Install");
+  //console.log("Install");
 });
 
 self.addEventListener('fetch', (event) => {
-  console.log('Fetch');
+  //console.log('Fetch');
 });

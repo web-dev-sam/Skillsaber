@@ -23,6 +23,8 @@ export class APICall {
     success(data) {
         if (this.responded) return;
 
+        console.log(data);
+
         this.responded = true;
         this.response.status(200).json(data);
     }
@@ -42,6 +44,25 @@ export class APICall {
             .catch(err => {
                 this.respond(500, err.message);
             });
+    }
+
+
+    dryExecute() {
+        return new Promise(resolve => {
+            fetch(this.url)
+                .then(res => {
+                    if (res.status !== 200) this.respond(400, 'API Error!');
+                    else return res.json();
+                })
+                .then(json => {
+                    if (json != null && this.isValidResponse(json))
+                        resolve(json);
+                    else this.respond(400, 'API error!');
+                })
+                .catch(err => {
+                    this.respond(500, err.message);
+                });
+        });
     }
 }
 

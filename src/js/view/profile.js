@@ -63,14 +63,14 @@ export default class ProfilePage {
                 const rowElement = document.createElement("tr");
                 rowElement.innerHTML = `
                     <th scope="row">
-                        <img src="${map.coverImage}" alt="" width="40">
+                        <img src="${map.coverImage}" alt="" width="40" height="40">
                     </th>
                     <td>${play.rank}</th>
                     <td>${map.songName}</td>
                     <td>${map.stars} <i class="fa-solid fa-star"></i></td>
                     <td>${play.accuracy}%</td>
                     <td>${play.pp}</td>
-                    <td>Nothing</td>
+                    <td>Loading...</td>
                 `;
                 this._topPlaysTable.appendChild(rowElement);
             }
@@ -101,10 +101,10 @@ export default class ProfilePage {
                     </th>
                     <td>${play.rank}</th>
                     <td>${map.songName}</td>
-                    <td>${map.stars} <i class="fa-solid fa-star"></i></td>
+                    <td>${map.stars}</td>
                     <td>${play.accuracy}%</td>
                     <td>${play.pp}</td>
-                    <td>Nothing</td>
+                    <td>${play.playWorth}pp</td>
                 `;
                 this._recentPlaysTable.appendChild(rowElement);
             }
@@ -114,19 +114,6 @@ export default class ProfilePage {
     }
 
 
-    hideProgress() {
-        this._progressElement.classList.add("hidden");
-        this._progressLabel.classList.add("hidden");
-    }
-
-
-    setProgress(progress) {
-        this._progressElement.classList.remove("hidden");
-        this._progressLabel.classList.remove("hidden");
-        this._progressElement.setAttribute("value", progress);
-        this._progressLabel.innerHTML = `${Math.floor(progress * 10) / 10}% <br> Loading your scoresaber profile... <br>(takes a few minutes based on your play count)`;
-    }
-
     areYouSure() {
         const confirm = window.confirm("This will delete all your cached scores, but will allow you to reload everything if something isn't working. Are you sure?");
         if (confirm) {
@@ -135,16 +122,18 @@ export default class ProfilePage {
     }
 
 
-    loadUI() {
+    async loadUI() {
         const profile = this.controller.profile;
         if (profile == null) {
             return;
         }
 
+        const avgPlayWorth = await this.controller.getAveragePlayWorth();
+
         // Load profile
         this._profileName.innerText = profile.name;
         this._profileImage.src = profile.profilePicture;
-        this._profilePP.innerText = profile.pp + "pp";
+        this._profilePP.innerText = `${profile.pp}pp (${avgPlayWorth}pp)`;
         this._headerContainer.classList.remove("hidden");
         document.title = `Skillsaber | ${profile.name}`;
 
@@ -158,10 +147,8 @@ export default class ProfilePage {
 
 
     showPageLoader() {
-        if (!window.FIRST_LOAD) {
-            this._pageLoader.indeterminate = true;
-            this._pageLoader.classList.remove("hidden");
-        }
+        this._pageLoader.indeterminate = true;
+        this._pageLoader.classList.remove("hidden");
     }
 
 

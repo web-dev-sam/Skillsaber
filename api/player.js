@@ -8,7 +8,9 @@ export default async (request, response) => {
     if (!id.match(/^\d+$/)) {
         return notFound(response, 'Invalid ID!');
     }
+
+    console.log(id);
     
     // Call the API
-    new APICall(`https://scoresaber.com/api/player/${id}/full`, response, json => json.id === id).execute();
+    new APICall(`https://scoresaber.com/api/player/${id}/full`, response, json => json.id).execute();
 };
