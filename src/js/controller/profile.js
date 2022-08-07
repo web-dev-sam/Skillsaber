@@ -96,9 +96,4 @@ export default class ProfileController {
     get scoreSaberId() {
         return this.get("id");
     }
-
-
-    get beatSaberCategory() {
-        return this.get("category");
-    }
 }

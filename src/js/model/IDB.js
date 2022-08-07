@@ -59,7 +59,6 @@ export default class DBHandler {
     async updatePlayerInfo(playerId, update, onUpdate) {
         const oldPlayer = await this.getPlayerInfo(playerId);
         if (oldPlayer != null && !update) {
-            console.log("UPDATE | Player already exists", playerId);
             return;
         }
 
@@ -68,8 +67,6 @@ export default class DBHandler {
             console.error("UPDATE | Player not found", playerId);
             return;
         }
-        
-        console.log("UPDATE | Saving Player", playerId);
 
         // Update player data
         this.db.open().then(() => {
@@ -96,15 +93,12 @@ export default class DBHandler {
             const playerData = await response.json();
 
             const plays = [];
+            playerData.playerScores = playerData.playerScores.filter(play => play.score && play.score.pp > 0 && play.leaderboard.difficulty.gameMode === "SoloStandard");
             for (const play of playerData.playerScores) {
-
-                let playWorth = 0;
-                let closePlayers = [];
-                if (play.score && play.score.pp > 0 && play.leaderboard.difficulty.gameMode === "SoloStandard") {
-                    closePlayers = await this.fetchClosePlayers(play.score.rank, play.leaderboard.id);
-                    await this.updateClosePlayersProfiles(closePlayers);
-                    playWorth = await this.calcPlayWorth(closePlayers);
-                }
+                
+                const closePlayers = await this.fetchClosePlayers(play.score.rank, play.leaderboard.id);
+                await this.updateClosePlayersProfiles(closePlayers);
+                const playWorth = await this.calcPlayWorth(closePlayers);
 
                 plays.push({
                     id: play.score.id,
@@ -163,22 +157,19 @@ export default class DBHandler {
         console.log("GET", fetchurl);
         const response = await fetch(fetchurl);
         const closePlayers = await response.json();
+        console.log("CLOSE PLAYERS", closePlayers);
         return closePlayers.map(player => player.leaderboardPlayerInfo.id);
     }
 
 
-    async updatePlayerPlays(playerId, onUpdate, onFinish, page=1) {
-        if (page === 3) {
+    async updatePlayerPlays(playerId, onUpdate, onFinish, page=1, rankedMaps=0) {
+        if (rankedMaps >= 10) {
             onFinish();
             return;
         }
         const playerPlaysData = await this.fetchPlayerPlays(playerId, page);
         if (playerPlaysData == null) {
             throw new Error("Error while fetching player plays");
-        }
-        if (playerPlaysData.plays.length == 0) {
-            onFinish();
-            return;
         }
 
         // Check if we already have this player's plays in the local database
@@ -198,10 +189,11 @@ export default class DBHandler {
         const newestRemotePlayTime = Math.max(
             ...remotePlays.map(play => new Date(play.timeSet))
         );
-        if (newestLocalPlayTime >= newestRemotePlayTime && !overwrite) {
+        if (remotePlays.length > 0 && newestLocalPlayTime >= newestRemotePlayTime && !overwrite) {
             onFinish();
             return;
         }
+        const restRemotePlays = remotePlays.filter(play => play.pp > 0).slice(0, 10 - rankedMaps);
 
         // Also update the maps
         await this.updateMaps(playerPlaysData.maps, onUpdate);
@@ -211,22 +203,19 @@ export default class DBHandler {
             return this.db.plays.where("playerId").equals(playerId).toArray();
         }).then((plays) => {
             if (plays.length == 0) {
-                return this.db.plays.bulkAdd(remotePlays);
+                return this.db.plays.bulkAdd(restRemotePlays);
             }
-            return this.db.plays.bulkPut(remotePlays);
+            return this.db.plays.bulkPut(restRemotePlays);
         }).then(async () => {
-            await this.updatePlayerPlays(playerId, onUpdate, onFinish, page+1);
+            onUpdate();
+            rankedMaps += restRemotePlays.length;
+            await this.updatePlayerPlays(playerId, onUpdate, onFinish, page+1, rankedMaps);
         }).catch (Dexie.MissingAPIError, (e) => {
             console.error("Couldn't find indexedDB API");
         }).catch ('SecurityError', (e) =>  {
             console.error("SecurityError - This browser doesn't like fiddling with indexedDB.");
         }).catch ((e) =>  {
             console.error(e);
-        }).finally(() => {
-            onUpdate({
-                progress: page,
-                total: Math.floor(playerPlaysData.metadata.total / playerPlaysData.metadata.itemsPerPage),
-            });
         });
     }
 

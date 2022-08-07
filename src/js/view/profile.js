@@ -63,11 +63,11 @@ export default class ProfilePage {
                 const rowElement = document.createElement("tr");
                 rowElement.innerHTML = `
                     <th scope="row">
-                        <img src="${map.coverImage}" alt="" width="40" height="40">
+                        <img src="${map.coverImage}" width="40" height="40">
                     </th>
                     <td>${play.rank}</th>
                     <td>${map.songName}</td>
-                    <td>${map.stars} <i class="fa-solid fa-star"></i></td>
+                    <td>${map.stars}</td>
                     <td>${play.accuracy}%</td>
                     <td>${play.pp}</td>
                     <td>Loading...</td>
@@ -97,7 +97,7 @@ export default class ProfilePage {
                 const rowElement = document.createElement("tr");
                 rowElement.innerHTML = `
                     <th scope="row">
-                        <img src="${map.coverImage}" alt="" width="40">
+                        <img src="${map.coverImage}" width="40" height="40">
                     </th>
                     <td>${play.rank}</th>
                     <td>${map.songName}</td>
