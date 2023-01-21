@@ -14,7 +14,6 @@ export class APICall {
         if (this.responded) return;
         
         this.responded = true;
-        this.response.setHeader("Access-Control-Allow-Origin", "*");
         this.response.status(code).json({
             errorMessage: message
         });
@@ -25,6 +24,7 @@ export class APICall {
         if (this.responded) return;
 
         this.responded = true;
+        this.response.setHeader("Access-Control-Allow-Origin", "*");
         this.response.status(200).json(data);
     }
 
