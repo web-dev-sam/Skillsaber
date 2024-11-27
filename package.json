@@ -14,6 +14,7 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@parcel/css": "^1.14.0",
     "@parcel/packager-raw-url": "^2.13.2",
     "@parcel/transformer-webmanifest": "^2.13.2",
     "parcel": "^2.13.2"
