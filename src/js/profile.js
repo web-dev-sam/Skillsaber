@@ -5,8 +5,8 @@ window._profilePage = new ProfilePage();
 
 if ("serviceWorker" in navigator) {
     try {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+            for (const registration of registrations) {
                 registration.unregister()
             }
         });

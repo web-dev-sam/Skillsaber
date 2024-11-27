@@ -22,13 +22,13 @@ export default async (request, response) => {
         return response.status(200).json(
             jsonmin.scores.filter(score => score.rank >= minRank && score.rank <= maxRank)
         );
-    } else {
-        const jsonmax = await new APICall(`https://scoresaber.com/api/leaderboard/by-id/${leaderboard}/scores?page=${maxPage}`, response, json => json.scores).dryExecute();
-        return response.status(200).json(
-            jsonmin.scores
-                .filter(score => score.rank >= minRank && score.rank <= maxRank)
-                .concat(jsonmax.scores
-                    .filter(score => score.rank >= minRank && score.rank <= maxRank))
-        );
     }
+
+    const jsonmax = await new APICall(`https://scoresaber.com/api/leaderboard/by-id/${leaderboard}/scores?page=${maxPage}`, response, json => json.scores).dryExecute();
+    return response.status(200).json(
+        jsonmin.scores
+            .filter(score => score.rank >= minRank && score.rank <= maxRank)
+            .concat(jsonmax.scores
+                .filter(score => score.rank >= minRank && score.rank <= maxRank))
+    );
 };

@@ -4,7 +4,7 @@ export default class MainController {
 
 
     redirectToProfile() {
-        window.location.href = "/profile.html?id=" + this.scoreSaberId;
+        window.location.href = `/profile.html?id=${this.scoreSaberId}`;
     }
 
 

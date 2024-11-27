@@ -55,7 +55,7 @@ export default class ProfilePage {
 
             const rankedData = data.filter(play => {
                 const map = this.controller.maps.find(map => map.leaderboardId === play.leaderboardId);
-                return map != null && map.ranked;
+                return map?.ranked;
             })
 
             for (const play of rankedData) {
@@ -89,7 +89,7 @@ export default class ProfilePage {
 
             const rankedData = data.filter(play => {
                 const map = this.controller.maps.find(map => map.leaderboardId === play.leaderboardId);
-                return map != null && map.ranked;
+                return map?.ranked;
             })
 
             for (const play of rankedData) {

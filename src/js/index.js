@@ -7,8 +7,8 @@ window._mainPage = new MainPage();
 if ("serviceWorker" in navigator) {
 
     try {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+            for (const registration of registrations) {
                 registration.unregister()
             }
         });

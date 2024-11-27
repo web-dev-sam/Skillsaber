@@ -1,23 +1,24 @@
 {
   "name": "skillsaber",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
   "scripts": {
     "start": "vercel dev",
     "deploy": "vercel",
     "prod": "vercel --prod",
     "parcel": "parcel ./src/*.html"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines" : { 
+    "node" : ">=20.18.0"
+  },
+  "author": "Samuel Braun",
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "@parcel/packager-raw-url": "^2.7.0",
-    "@parcel/transformer-webmanifest": "^2.7.0",
-    "parcel": "^2.7.0"
+    "@parcel/packager-raw-url": "^2.13.2",
+    "@parcel/transformer-webmanifest": "^2.13.2",
+    "parcel": "^2.13.2"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^3.3.2"
   }
 }

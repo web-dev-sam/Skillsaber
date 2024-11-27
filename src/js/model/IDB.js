@@ -10,9 +10,9 @@ export default class DBHandler {
     initDB() {
         const db = new Dexie("SkillsaberDB");
         db.version(3).stores({
-            players: `id, name, profilePicture, country, pp, rank, countryRank, averageRankedAccuracy, totalPlayCount, rankedPlayCount, replaysWatched, isMyProfile`,
-            plays: `id, rank, accuracy, pp, playerId, weight, modifiers, badCuts, missedNotes, maxCombo, fullCombo, timeSet, hasReplay, leaderboardId, closePlayers, playWorth`,
-            maps: `leaderboardId, songHash, songName, songSubName, songAuthorName, levelAuthorName, difficulty, difficultyRaw, ranked, qualified, stars, coverImage`,
+            players: "id, name, profilePicture, country, pp, rank, countryRank, averageRankedAccuracy, totalPlayCount, rankedPlayCount, replaysWatched, isMyProfile",
+            plays: "id, rank, accuracy, pp, playerId, weight, modifiers, badCuts, missedNotes, maxCombo, fullCombo, timeSet, hasReplay, leaderboardId, closePlayers, playWorth",
+            maps: "leaderboardId, songHash, songName, songSubName, songAuthorName, levelAuthorName, difficulty, difficultyRaw, ranked, qualified, stars, coverImage",
         });
         return db;
     }
@@ -202,14 +202,13 @@ export default class DBHandler {
         this.db.open().then(() => {
             return this.db.plays.where("playerId").equals(playerId).toArray();
         }).then((plays) => {
-            if (plays.length == 0) {
+            if (plays.length === 0) {
                 return this.db.plays.bulkAdd(restRemotePlays);
             }
             return this.db.plays.bulkPut(restRemotePlays);
         }).then(async () => {
             onUpdate();
-            rankedMaps += restRemotePlays.length;
-            await this.updatePlayerPlays(playerId, onUpdate, onFinish, page+1, rankedMaps);
+            await this.updatePlayerPlays(playerId, onUpdate, onFinish, page+1, rankedMaps + restRemotePlays.length);
         }).catch (Dexie.MissingAPIError, (e) => {
             console.error("Couldn't find indexedDB API");
         }).catch ('SecurityError', (e) =>  {
